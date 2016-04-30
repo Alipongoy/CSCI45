@@ -25,7 +25,10 @@ int main(int argc, char **argv) {
 	outs << ".global main\nmain:\n"; //Get the file ready to rock
 	outs << "\tPUSH {LR}\n\tPUSH {R4-R12}\n\n";
 
-	// Map. This stuff's important
+	// JOSH'S CODE
+	// This is my map. A map is like an array, but instead of using indexes like var[0] or var[1], you can feed it other data types like strings.
+	// E.G. var_map["A"] will return the string R4.
+	// This is very similar to hash tables from Ruby.
 	map<string, string> var_map;
 	var_map["A"] = "R4";
 	var_map["B"] = "R5";
@@ -36,14 +39,20 @@ int main(int argc, char **argv) {
 	var_map["Y"] = "R10";
 	var_map["Z"] = "R11";
 	// End of map
+	// END OF JOSH'S CODE
 
 
 	int line_no = 0;
 
-	// Initializes variables
+	// JOSH'S CODE
+	// This is a range based for loop. It itterates through every element of the var_map. 
 	for (auto index: var_map) {
+		// index.second will return the value at a certain index in the map.
+		// E.G. In first itteration, index.second = "R4". 
+		// If we were to use index.first instead, we would get "A" at first itteration.
 		outs << "\tMOV " << index.second << ", #0\n";
 	}
+	// END OF JOSH'S CODE
 
 	while (cin) {
 		string s;

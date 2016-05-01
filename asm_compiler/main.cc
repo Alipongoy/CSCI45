@@ -1,3 +1,10 @@
+// THINGS THAT STILL HAVE TO BE IMPLEMENTED
+// ========================================
+// 1) PRINT X (IN PROGRESS)
+// 2) PRINT "STRING" (IN PROGRESS)
+// 3) INPUT X (IN PROGRESS)
+// 4) END (NOT STARTED)
+// 5) Error checking for using undefine variables (DONE)
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -5,12 +12,24 @@
 #include <sstream>
 #include <unistd.h>
 #include <map>
+#include <string>
+#include "print.c"
 using namespace std;
 
 void die(int line_no = 0) {
 	cout << "Syntax Error on line " << line_no << endl;
 	exit(1);
 }
+
+void var_checker(map<string, string> var_map, string var) {
+	cout << "var_checker is running.\n";
+	if (var_map.count(var) == 0) {
+		cout << "Variable " << var << " cannot be found.\n";
+		die();
+	}
+}
+
+
 
 int main(int argc, char **argv) {
 	//If we pass any parameters, we'll just generate an assembly file 
@@ -87,21 +106,47 @@ int main(int argc, char **argv) {
 		}
 
 		//YOU: Put all of your code here, interpreting the different commands in BB8
-		//else if (command == "PRINT") {
-		// string scommand;
-		// ss >> scommand;
-		// if (scommand[0] != '"') {
-		// 		
-		// }
-		// cout << scommand[0] << endl;
-		//}
+		else if (command == "PRINT") {
+			string scommand;
+			// scommand is the label or variable we want to print out.
+			ss >> scommand;
+			// If we want to print text to a screen, this runs.
+			if (scommand[0] == '"') {
+				string word = "";
+				string no_quotes_command = scommand;
+
+				// This continously reads in words until it reads in last quotation mark
+				if ((no_quotes_command[no_quotes_command.length() - 1]) != '"') {
+					do {
+						ss >> word;
+						no_quotes_command += " " + word;
+					} while ((no_quotes_command[no_quotes_command.length() - 1]) != '"');
+				}
+
+				no_quotes_command.erase(0, 1);
+				no_quotes_command.erase(no_quotes_command.length() - 1);
+
+				cout << ".data\n string_" << label << ": .ascii \"" << no_quotes_command << "\"\n\n";
+				outs << ".data\n string_" << label << ": .ascii \"" << no_quotes_command << "\"\n\n";
+				
+				cout << ".code32\nLDR R0, =string_" << label << endl; 
+				outs << ".code32\nLDR R0, =string_" << label << endl; 
+
+				cout << "BL print_string\n"; 
+				outs << "BL print_string\n"; 
+			}
+			// If we want to print out a variable to the screen, this runs instead.
+			//	else {
+
+			//	}
+		}
 
 
 		// My implementation of "LET"
 		else if (command == "LET") {
 			string var_1, var_2, var_3, my_operator, possible_equals;
 			ss >> var_1 >> possible_equals >> var_2 >> my_operator >> var_3;
-			cout << my_operator << endl;
+			var_checker(var_map, var_1);
 			// Below code is for debugging purposes
 			// cout << var_1 << " " <<  bleh << " " << var_2 << " " << my_operator << " " << var_3 << endl;
 			if (my_operator == "+") {

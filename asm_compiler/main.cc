@@ -48,6 +48,10 @@ int main(int argc, char **argv) {
 	// This is my map. A map is like an array, but instead of using indexes like var[0] or var[1], you can feed it other data types like strings.
 	// E.G. var_map["A"] will return the string R4.
 	// This is very similar to hash tables from Ruby.
+	// Also I added a string vector to hold the .data stuff for asm
+	print_string("fafa");
+	vector<string> string_vector;
+	string_vector.push_back( ".data\n");
 	map<string, string> var_map;
 	var_map["A"] = "R4";
 	var_map["B"] = "R5";
@@ -106,13 +110,14 @@ int main(int argc, char **argv) {
 		}
 
 		//YOU: Put all of your code here, interpreting the different commands in BB8
+		// This is my implementation of the "PRINT" function
 		else if (command == "PRINT") {
 			string scommand;
 			// scommand is the label or variable we want to print out.
 			ss >> scommand;
 			// If we want to print text to a screen, this runs.
 			if (scommand[0] == '"') {
-				string word = "";
+				string word, push_back_word = "";
 				string no_quotes_command = scommand;
 
 				// This continously reads in words until it reads in last quotation mark
@@ -126,11 +131,10 @@ int main(int argc, char **argv) {
 				no_quotes_command.erase(0, 1);
 				no_quotes_command.erase(no_quotes_command.length() - 1);
 
-				cout << ".data\n string_" << label << ": .ascii \"" << no_quotes_command << "\"\n\n";
-				outs << ".data\n string_" << label << ": .ascii \"" << no_quotes_command << "\"\n\n";
-				
-				cout << ".code32\nLDR R0, =string_" << label << endl; 
-				outs << ".code32\nLDR R0, =string_" << label << endl; 
+				push_back_word = "string_" + to_string(label) + ": .ascii \"" + no_quotes_command + "\"\n\n";
+				string_vector.push_back(push_back_word);
+
+				outs << "LDR R0, =string_" << label << endl; 
 
 				cout << "BL print_string\n"; 
 				outs << "BL print_string\n"; 
@@ -265,6 +269,9 @@ int main(int argc, char **argv) {
 
 	//Clean up the file at the bottom
 	outs << "\nquit:\n\tMOV R0, #42\n\tPOP {R4-R12}\n\tPOP {PC}\n"; //Finish the code and return
+	for (string it: string_vector) {
+		outs << it;
+	}
 	outs.close(); //Close the file
 
 	if (assemble_only) return 0; //When you're debugging you should run bb8 with a parameter

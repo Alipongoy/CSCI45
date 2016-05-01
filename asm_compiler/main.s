@@ -12,10 +12,6 @@ main:
 	MOV R10, #0
 	MOV R11, #0
 line_10:
-.data
- string_10: .ascii "HELLO WORLD"
-
-.code32
 LDR R0, =string_10
 BL print_string
 
@@ -23,3 +19,5 @@ quit:
 	MOV R0, #42
 	POP {R4-R12}
 	POP {PC}
+.data
+string_10: .ascii "HELLOWORLD"

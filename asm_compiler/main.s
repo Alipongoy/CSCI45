@@ -12,12 +12,18 @@ main:
 	MOV R10, #0
 	MOV R11, #0
 line_10:
-LDR R0, =string_10
-BL print_string
+	LDR R0, R9
+	BL print_number
+line_20:
+	LDR R0, =string_20
+	BL print_string
+line_30:
+	BAL quit
 
 quit:
 	MOV R0, #42
 	POP {R4-R12}
 	POP {PC}
 .data
-string_10: .ascii "HELLOWORLD"
+string_20: .ascii "WHAT THE FUCK RIGHT NOW"
+

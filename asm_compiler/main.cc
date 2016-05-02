@@ -1,10 +1,17 @@
-// THINGS THAT STILL HAVE TO BE IMPLEMENTED
-// ========================================
-// 1) PRINT X (IN PROGRESS)
-// 2) PRINT "STRING" (IN PROGRESS)
-// 3) INPUT X (IN PROGRESS)
-// 4) END (NOT STARTED)
-// 5) Error checking for using undefine variables (DONE)
+/* 
+========================================
+THINGS THAT STILL HAVE TO BE IMPLEMENTED
+========================================
+1) PRINT X (DONE)
+2) PRINT "STRING" (DONE)
+3) INPUT X (IN PROGRESS)
+	- cin does not work properly, idk why
+4) END (DONE)
+5) Error checking for using undefine variables (DONE)
+6) Trying to use any other variable is a syntax error. (IN PROGRESS)
+7) All variables will be 32-bit integers. (NOT STARTED)
+	- Use LDR to move them 32-bit integers
+*/
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -49,7 +56,6 @@ int main(int argc, char **argv) {
 	// E.G. var_map["A"] will return the string R4.
 	// This is very similar to hash tables from Ruby.
 	// Also I added a string vector to hold the .data stuff for asm
-	print_string("fafa");
 	vector<string> string_vector;
 	string_vector.push_back( ".data\n");
 	map<string, string> var_map;
@@ -134,15 +140,19 @@ int main(int argc, char **argv) {
 				push_back_word = "string_" + to_string(label) + ": .ascii \"" + no_quotes_command + "\"\n\n";
 				string_vector.push_back(push_back_word);
 
-				outs << "LDR R0, =string_" << label << endl; 
+				outs << "\tLDR R0, =string_" << label << endl; 
 
-				cout << "BL print_string\n"; 
-				outs << "BL print_string\n"; 
+				outs << "\tBL print_string\n"; 
 			}
 			// If we want to print out a variable to the screen, this runs instead.
-			//	else {
-
-			//	}
+			else {
+				cout << "Else statement is running.\n";
+				// This kills itself if variable does not exist.
+				var_checker(var_map, scommand);
+				outs << "\tLDR R0, " << var_map[scommand] << endl;
+				outs << "\tBL print_number\n";
+			}
+			continue;
 		}
 
 
@@ -254,6 +264,11 @@ int main(int argc, char **argv) {
 					outs << "\tBGE line_" << line_number_1 << endl;	
 				}
 			}
+
+			else {
+				cout << "Invaild expression holder.\n";
+				die();
+			}
 			continue;
 		}
 
@@ -264,6 +279,17 @@ int main(int argc, char **argv) {
 			ss >> user_var >> user_num;
 			outs << "\tMOV " << var_map[user_var] << ", #" << user_num << endl;
 			continue;
+		}
+
+		// My implementation of END
+		else if (command == "END") {
+			outs << "\tBAL quit\n";
+			continue;
+		}
+
+		// If none of the commands are listed, then it dies :D
+		else {
+			die();
 		}
 	}
 

@@ -1,17 +1,17 @@
 /* 
-========================================
-THINGS THAT STILL HAVE TO BE IMPLEMENTED
-========================================
-1) PRINT X (DONE)
-2) PRINT "STRING" (DONE)
-3) INPUT X (IN PROGRESS)
-	- cin does not work properly, idk why
-4) END (DONE)
-5) Error checking for using undefine variables (DONE)
-6) Trying to use any other variable is a syntax error. (IN PROGRESS)
-7) All variables will be 32-bit integers. (NOT STARTED)
-	- Use LDR to move them 32-bit integers
-*/
+   ========================================
+   THINGS THAT STILL HAVE TO BE IMPLEMENTED
+   ========================================
+   1) PRINT X (DONE)
+   2) PRINT "STRING" (DONE)
+   3) INPUT X (IN PROGRESS)
+   - cin does not work properly, idk why
+   4) END (DONE)
+   5) Error checking for using undefine variables (DONE)
+   6) Trying to use any other variable is a syntax error. (IN PROGRESS)
+   7) All variables will be 32-bit integers. (NOT STARTED)
+   - Use LDR to move them 32-bit integers
+   */
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -22,21 +22,25 @@ THINGS THAT STILL HAVE TO BE IMPLEMENTED
 #include <string>
 #include "print.c"
 using namespace std;
-
+int joshy_love = 0;
 void die(int line_no = 0) {
 	cout << "Syntax Error on line " << line_no << endl;
 	exit(1);
 }
 
+// JOSH'S CODE
 void var_checker(map<string, string> var_map, string var) {
+	// LESS THAN 48, GREAATER THAN 57
 	cout << "var_checker is running.\n";
 	if (var_map.count(var) == 0) {
-		cout << "Variable " << var << " cannot be found.\n";
-		die();
+		for (int i: var) {
+			if (i < 48 || i > 57) {
+				cout << "character " << i << " is not a number is not 0-9\n";
+				die();
+			}
+		}
 	}
 }
-
-
 
 int main(int argc, char **argv) {
 	//If we pass any parameters, we'll just generate an assembly file 
@@ -69,6 +73,7 @@ int main(int argc, char **argv) {
 	var_map["Z"] = "R11";
 	// End of map
 	// END OF JOSH'S CODE
+
 
 
 	int line_no = 0;
@@ -136,11 +141,11 @@ int main(int argc, char **argv) {
 
 				no_quotes_command.erase(0, 1);
 				no_quotes_command.erase(no_quotes_command.length() - 1);
-
-				push_back_word = "string_" + to_string(label) + ": .ascii \"" + no_quotes_command + "\"\n\n";
+				joshy_love++;
+				push_back_word = "string_" + to_string(label) + to_string(joshy_love) + ": .ascii \"" + no_quotes_command + "\"\n\n";
 				string_vector.push_back(push_back_word);
 
-				outs << "\tLDR R0, =string_" << label << endl; 
+				outs << "\tLDR R0, =string_" << label + joshy_love<< endl; 
 
 				outs << "\tBL print_string\n"; 
 			}
@@ -176,7 +181,8 @@ int main(int argc, char **argv) {
 			}
 
 			else if (possible_equals == "=") {
-				outs << "\tMOV " << var_map[var_1] << ", " << "#" << var_2  << "\n";				 
+				// If you are wondering why LDR, its because LDR can move more than 8 bits
+				outs << "\tLDR " << var_map[var_1] << ", =" << var_2  << "\n";				 
 			}
 			continue;
 		}
@@ -302,7 +308,7 @@ int main(int argc, char **argv) {
 
 	if (assemble_only) return 0; //When you're debugging you should run bb8 with a parameter
 
-	if (system("g++ main.s")) { //Compile your assembler code and check for errors
+	if (system("g++ print.c main.s")) { //Compile your assembler code and check for errors
 		cout << "Assembling failed, which means your compiler screwed up.\n";
 		return 1;
 	}

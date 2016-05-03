@@ -11,19 +11,11 @@ main:
 	MOV R9, #0
 	MOV R10, #0
 	MOV R11, #0
-line_10:
-	BL input_number
-	MOV R9, R0
-line_20:
-	LDR R0, =string_1
-	BL print_string
-line_30:
-	MOV R0, R9
-	BL print_number
+line_5:
+@this is a comment  
 
 quit:
 	MOV R0, #42
 	POP {R4-R12}
 	POP {PC}
 .data
-string_1: .ascii "x =  "

@@ -4,12 +4,12 @@
    ========================================
    1) PRINT X (DONE)
    2) PRINT "STRING" (DONE)
-   3) INPUT X (IN PROGRESS)
+   3) INPUT X (DONEZO)
    - cin does not work properly, idk why
    4) END (DONE)
    5) Error checking for using undefine variables (DONE)
-   6) Trying to use any other variable is a syntax error. (IN PROGRESS)
-   7) All variables will be 32-bit integers. (NOT STARTED)
+   6) Trying to use any other variable is a syntax error. (DONE)
+   7) All variables will be 32-bit integers. (DONE)
    - Use LDR to move them 32-bit integers
    */
 #include <cstdlib>
@@ -29,7 +29,9 @@ void die(int line_no = 0) {
 }
 
 // JOSH'S CODE
-// PARAMETERS: map var_map, string var
+// TLDR: This function checks if var is in the var_map. If it isn't, then it checks if it is a number. If it isn't both, then it kills itself.
+// PARAMETERS: map<string, string> var_map, string var
+// RETURNS: var, var_map[var]
 string var_checker(map<string, string> var_map, string &var) {
 	// LESS THAN 48, GREAATER THAN 57
 	transform(var.begin(), var.end(), var.begin(), ::toupper); //Uppercaseify
@@ -47,6 +49,9 @@ string var_checker(map<string, string> var_map, string &var) {
 	return var;
 }
 
+// TLDR: this function checks if var is a register.
+// PARAMETERS: string var
+// RETURNS: bool true, bool false 
 bool is_register(string var) {
 	if (var[0] == '#') {
 		return true;
@@ -129,12 +134,21 @@ int main(int argc, char **argv) {
 		transform(command.begin(), command.end(), command.begin(), ::toupper);
 		if (!ss) die(line_no);
 
+		// Prints out comments
 		if (command == "REM") {
+			outs << "\t@";
+			while (ss) {
+				string temp_holder;
+				ss >> temp_holder;
+				outs << temp_holder << " ";
+			}
+			outs << endl;
 			continue;
 		}
 
 		else if(command == "QUIT")
 			break;
+
 		else if (command == "GOTO") {
 			int target;
 			ss >> target;
@@ -235,6 +249,7 @@ int main(int argc, char **argv) {
 			var_checker(var_map, var_1);
 			var_checker(var_map, var_2);
 
+			// This makes sure only variables are being compared.
 			if (var_map.count(var_1) == 0 || var_map.count(var_2) == 0) {
 				die();
 			}
@@ -243,7 +258,7 @@ int main(int argc, char **argv) {
 				outs << "\tCMP " << var_map[var_1] << ", " << var_map[var_2] << "\n";				 
 			}
 
-			// Todo: implement else statements
+			// A really crappy version of making branches. The else statements are inverses of the expression holder.
 			if (expression_holder == "==") {
 				if (else_statement != "ELSE") {
 					outs << "\tBEQ line_" << line_number_0 << endl;

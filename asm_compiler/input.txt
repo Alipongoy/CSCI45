@@ -1,0 +1,9 @@
+5 REM This is a comment
+10 LET X = 5
+11 LET Y = 0
+20 IF X <= Y THEN GOTO 100
+25 PRINT "X = "
+30 PRINT X
+40 LET X = X - 1
+50 GOTO 20
+100 END

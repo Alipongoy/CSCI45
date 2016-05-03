@@ -11,11 +11,22 @@ main:
 	MOV R9, #0
 	MOV R10, #0
 	MOV R11, #0
-line_5:
-@this is a comment  
-
-quit:
-	MOV R0, #42
-	POP {R4-R12}
-	POP {PC}
-.data
+line_1:
+line_2:
+line_3:
+line_10:
+	CMP R9, R10
+	BNE line_30
+	BAL line_40
+line_30:
+line_40:
+line_50:
+	MOV R0, R9
+	BL print_number
+line_60:
+	LDR R0, =string_1
+	BL print_string
+line_70:
+	CMP R9, R10
+	BEQ line_100
+	BAL line_110

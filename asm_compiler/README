@@ -28,43 +28,44 @@ General Error Rule:
 0. Any line that does not conform to the rules below will result in your compiler outputting "Syntax Error Line X" (where X is the line of code) and terminating without creating an assembly source code or executable.
 
 Each line of code will take up *exactly* one line of text (BB8 is newline terminated):
-1. Every line of code must start with a number
-1.1 All lines must start with a number, and the line number of each line must be greater than the line number of the line before it, but they do not need to be continuous. (I.e., line could be numbered 10, 20, 30, etc.)
-1.2 All lines that start with a number and then REM are comments, and the rest of the line must be discarded.
++1. Every line of code must start with a number
++1.1 All lines must start with a number, and the line number of each line must be greater than the line number of the line before it, but they do not need to be continuous. (I.e., line could be numbered 10, 20, 30, etc.)
++1.2 All lines that start with a number and then REM are comments, and the rest of the line must be discarded.
 
 2. After the number and space, there will be a command. The following commands exist:
-2.1 GOTO X - this makes it so the next line of code to run is line X (X is a number)
-2.2 PRINT X - this will print the value of variable X (see variables, below) to stdout, and add a newline.
-2.3 PRINT "STRING" - this will print the string held within the double quotes to stdout, without adding a newline.
-2.4 LET X = Y + Z - this will set the value of variable X to the sum of Y and Z (which are also variables)
-2.5 LET X = Y - Z - this will set the value of variable X to the difference of Y and Z
-2.6 LET X = Y * Z - this will set the value of variable X to the product of Y and Z
-2.7 LET X = NUMBER - this will set variable X to the immediate value held in number
-2.8 IF (LOGICAL EXPRESSION) THEN GOTO X - if the logical expression is true (see below) then jump to line X.
-2.9 IF (LOGICAL EXPRESSION) THEN GOTO X ELSE GOTO Y - if the logical expression is true (see below) then jump to line X, otherwise jump to line Y.
-2.10 INPUT X - this will read one number from the standard input and store it into the variable specified.
-2.11 END - terminates the program
-2.12 Note: All commands take up exactly one line. Any command not matching the above is a syntax error.
++2.1 GOTO X - this makes it so the next line of code to run is line X (X is a number)
+~2.2 PRINT X - this will print the value of variable X (see variables, below) to stdout, and add a newline.
+~2.3 PRINT "STRING" - this will print the string held within the double quotes to stdout, without adding a newline.
+~2.4 LET X = Y + Z - this will set the value of variable X to the sum of Y and Z (which are also variables)
+~2.5 LET X = Y - Z - this will set the value of variable X to the difference of Y and Z
+~2.6 LET X = Y * Z - this will set the value of variable X to the product of Y and Z
+~2.7 LET X = NUMBER - this will set variable X to the immediate value held in number
++2.8 IF (LOGICAL EXPRESSION) THEN GOTO X - if the logical expression is true (see below) then jump to line X.
++2.9 IF (LOGICAL EXPRESSION) THEN GOTO X ELSE GOTO Y - if the logical expression is true (see below) then jump to line X, otherwise jump to line Y.
+-2.10 INPUT X - this will read one number from the standard input and store it into the variable specified.
++2.11 END - terminates the program
++2.12 Note: All commands take up exactly one line. Any command not matching the above is a syntax error.
 
 3. Variables.
-3.1 All variables will be 32-bit integers.
-3.2 All variables have single letter names.
-3.2 Only 8 variables exist: A, B, C, I, J, X, Y, Z.
-3.3 Trying to use any other variable is a syntax error.
-3.4 All variables must be set to 0 at program start
-3.5 Example: LET X = C + Z will set X to the sum of C + Z
++3.1 All variables will be 32-bit integers.
++3.2 All variables have single letter names.
++3.2 Only 8 variables exist: A, B, C, I, J, X, Y, Z.
++3.3 Trying to use any other variable is a syntax error.
++3.4 All variables must be set to 0 at program start
++3.5 Example: LET X = C + Z will set X to the sum of C + Z
 
 4. Logical expressions.
-4.1 All logical expressions are comparisons of two variables. (I.e. no comparisons with immediates.)
-4.2 The following comparisons must be supported: >, <, >=, <=, ==, !=.
-4.3 The only thing an if statement can do is GOTO one line, and maybe ELSE goto another line.
++4.1 All logical expressions are comparisons of two variables. (I.e. no comparisons with immediates.)
++4.2 The following comparisons must be supported: >, <, >=, <=, ==, !=.
+~4.3 The only thing an if statement can do is GOTO one line, and maybe ELSE goto another line.
 4.4 Example: IF X > Y THEN GOTO 10
 
 5. Program termination.
-5.1 The program will terminate when it tries to go past the last line of code
-5.2 The program will terminate whenever a EXIT command is executed
+-5.1 The program will terminate when it tries to go past the last line of code
+	(goto past last line of code == quit)
++5.2 The program will terminate whenever a EXIT command is executed
 
-6. Syntax errors.
+~6. Syntax errors.
 6.1 Any line of code not conforming to the syntax specified above will generate an error.
 6.2 All errors will be detected at compile time. There are no run time errors.
 6.3 When a syntax error is detected, print out: "Syntax Error on line X" and terminate compilation.

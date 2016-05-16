@@ -16,6 +16,7 @@
 
 2) __Load/Store Architecture__
 	- When you load values into a register from RAM and vice versa
+	
 	```assembly
 		LDR R1, =0x12345678
 		LDR R0, [R1]

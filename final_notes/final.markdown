@@ -1,10 +1,11 @@
 #Final
 ###10 Questions on ASM
 ###10 Questions on Binary
-- LSR
-- LSL
-- ASR
-- ROR
+LSR
+LSL
+ASR
+ROR
+IEE 754
 ###10 Questions on Architecture
 ###5 Points on Physical Computing
 ###5 Points Debugging

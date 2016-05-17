@@ -1031,25 +1031,37 @@ body .markdown-body
     - Slow<br />
     - Most modern arcitectures disallow working directly with values in RAM</p>
 <p>2) <strong>Load/Store Architecture</strong><br />
-    - When you load values into a register from RAM and vice versa<br />
-    <pre><code class="assembly">    LDR R1, =0x12345678
+    - When you load values into a register from RAM and vice versa</p>
+<pre><code>    LDR R1, =0x12345678
     LDR R0, [R1]
-</code></pre></p>
+</code></pre>
 <h4 id="computer-architectures"><a name="user-content-computer-architectures" href="#computer-architectures" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Computer Architectures</h4>
 <p>1) <strong>RISC</strong><br />
     - a design philosophy that a CPU should as little instructions as possible so hardware can be cheap, simple, and fast<br />
     - Every command is usually 32 or 64 bits<br />
     - Each command runs in one cycle<br />
     - The ARM architecture follows this<br />
-    - This is more superior according to Brofessor Kerney<br />
-2) <strong>CISC</strong><br />
-    - a design philosophy that a CPU should have more complex instructions, like sine or cosine, because its faster to run complex instructions in hardware than implement them in softwareA<br />
+    - This is more superior according to Brofessor Kerney</p>
+<p>2) <strong>CISC</strong><br />
+    - a design philosophy that a CPU should have more complex instructions, like sine or cosine, because its faster to run complex instructions in hardware than implement them in software<br />
     - A flaw to <strong>CISC</strong> is that instruction decoding can become very complicated</p>
 <h2 id="5-points-on-physical-computing"><a name="user-content-5-points-on-physical-computing" href="#5-points-on-physical-computing" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>5 Points on Physical Computing</h2>
 <h4 id="caching"><a name="user-content-caching" href="#caching" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Caching</h4>
 <h4 id="alu"><a name="user-content-alu" href="#alu" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>ALU</h4>
-<p>An Arithmatic Logic Unit(ALU) is a single block of circuitry that can do multiple commands. These commands include:</p>
-<p>1) Add</p>
+<p>An <strong>Arithmatic Logic Unit(ALU)</strong> is a single block of circuitry that can do multiple commands. An ALU typically has 32 commands. These commands include:</p>
+<ol>
+<li>ADD</li>
+<li>SUB</li>
+<li>INCREMENT</li>
+<li>NEGATE</li>
+<li>MULTIPLY</li>
+<li>Logical Expressions(AND, OR, EOR, NOT)</li>
+<li>Rotate</li>
+</ol>
+<p>An 8 bit <strong>ALU</strong> would take two 8 bit numbers as inputs, and an 8 bit command.</p>
+<p>Instructions such as multiply would take at least 4 cycles to complete, so if you have one <strong>ALU</strong>, there would be a pipeline stall. To prevent this, we have multiple <strong>ALUs</strong>, AKA superscalar computing.</p>
+<h4 id="superscalar-computing"><a name="user-content-superscalar-computing" href="#superscalar-computing" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Superscalar Computing</h4>
+<p><strong>Superscalar Computing</strong> is the idea that we have multiple ALUs implemented in the CPU. The </p>
 <h2 id="5-points-debugging"><a name="user-content-5-points-debugging" href="#5-points-debugging" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>5 Points Debugging</h2>
 <h2 id="10-points-writing-code"><a name="user-content-10-points-writing-code" href="#10-points-writing-code" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>10 Points Writing Code</h2>
 <h1 id="topics-on-the-final"><a name="user-content-topics-on-the-final" href="#topics-on-the-final" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Topics on the Final</h1>

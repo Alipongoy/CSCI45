@@ -1,0 +1,9 @@
+This code implements some sort of weird algebraic formula whose purpose doesn't matter.
+
+Look through main.c (***but do not edit at all***) and at the top you will see teacher_calc().
+
+Figure out how it works, and then you will need to implement it in assembly in student_calc.s
+
+Use the makefile to build the project, don't compile it directly. (Just type "mk" or "make".)
+
+Your code is correct when your assembly generates the same results as the teacher_calc function.

@@ -1,0 +1,13 @@
+Final45-B: FINAL WORDS Assignment
+
+This is a pretty easy assignment, it is really to get you to think about the words of a famous philosopher as you exit our computer science program and move on to the greater world abroad.
+
+The coding is simple, you will use the WRITE SYSCALL (not printf or cout, etc.) to print to the screen the following text (including the newlines exactly as shown):
+
+MONETARY STATUS is not what matters (but it helps) -
+A man is MEASURED by the way that he THINKS
+not clothing lines, ice memes, mudkips, and minks.
+I spent 20 plus years SEEKING KNOWLEDGE itself.
+So live life for LIFE, and not for wealth.
+
+Note: build your project using "make" (or "mk"). You cannot use anything other than assembly.
